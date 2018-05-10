@@ -113,7 +113,6 @@
                 rhs.len = 0;
                 rhs.head = nullptr;
                 rhs.tail = nullptr;
-
             }
             linkList& operator= (const linkList& rhs) {
                 linkList temp = rhs;
@@ -208,7 +207,7 @@
                     temp = rem(temp);
                 return temp;
             }
-            void printList() {
+            void printList() const {
                 for(auto it = begin(); it != end(); it++)
                     std::cout << *it << " ";
                 std::cout << std::endl;
@@ -247,5 +246,8 @@ void main()
 
     tester.printList();
     tester2.printList();
+
+    const linkList<int> tester3 = tester;
+    tester3.printList();
 }
 */
