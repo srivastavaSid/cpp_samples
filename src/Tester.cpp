@@ -1,5 +1,15 @@
 #include <iostream>
-#include "LinkList.h"
+#include "vecArray.h"
+
+void main()
+{
+    vecArray<int> tester;
+    tester.pushBack(1);
+    tester.pushBack(3);
+    tester.printVec();
+}
+
+/*#include "LinkList.h"
 
 void main()
 {
@@ -18,3 +28,4 @@ void main()
     const linkList<int> tester3 = tester;
     tester3.printList();
 }
+*/

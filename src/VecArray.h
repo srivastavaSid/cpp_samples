@@ -5,54 +5,109 @@
     template<typename T>
     class vecArray {
         public:
-            static const DEF_CAPACITY = 100
+            static const int DEF_CAPACITY = 100;
             vecArray(int newCap = DEF_CAPACITY):
-                capacity(newCap), sz(0) {
-                    arr = new T[newCap];
+                mCap(newCap), mSize(0) {
+                    mArr = new T[newCap];
                 }
-            vecArray(vecArray& rhs):
-                capacity(rhs.capacity), sz(rhs.sz) {
-                    arr = new T[capacity];
-                    for (int i=0; i<sz; i++) {
-                        arr[i] = rhs.arr[i];
+            vecArray(const vecArray& rhs):
+                mCap(rhs.mCap), mSize(rhs.mSize) {
+                    mArr = new T[mCap];
+                    for (int i=0; i<mSize; i++) {
+                        mArr[i] = rhs.mArr[i];
                     }
                 }
             vecArray(vecArray&& rhs):
-                capacity(std::move(rhs.capacity)), sz(std::move(rhs.sz)), arr(std::move(rhs.arr)) {
-                    rhs.capacity = 0;
-                    rhs.sz = 0;
-                    rhs.arr = nullptr;
+                mCap(std::move(rhs.mCap)), mSize(std::move(rhs.mSize)), mArr(std::move(rhs.mArr)) {
+                    rhs.mCap = 0;
+                    rhs.mSize = 0;
+                    rhs.mArr = nullptr;
                 }
-            vecArray& operator = (vecArray& rhs) {
+            vecArray& operator = (const vecArray& rhs) {
                 vecArray temp = rhs;
                 std::swap(temp, *this);
                 return *this;
             }
             vecArray& operator = (vecArray&& rhs) {
-                std::swap(capacity, rhs.capacity);
-                std::swap(sz, rhs.sz);
-                std::swap(arr, rhs.arr);
+                std::swap(mCap, rhs.mCap);
+                std::swap(mSize, rhs.mSize);
+                std::swap(mArr, rhs.mArr);
                 return *this;
             }
             ~vecArray() {
-                delete [] arr;
-                capacity = 0;
-                sz = 0;
-                arr = nullptr;
+                delete [] mArr;
+                mCap = 0;
+                mSize = 0;
+                mArr = nullptr;
             }
             void reserve (int newCap) {
-                if (capacity < newCap) {
+                if (mCap < newCap) {
                     T* temp = new T[newCap];
-                    for (int i=0; i<sz; i++)
-                        temp[i] = arr[i];
-                    delete [] arr;
-                    arr = temp;
-                    capacity = newCap;
+                    for (int i=0; i<mSize; i++)
+                        temp[i] = mArr[i];
+                    delete [] mArr;
+                    mArr = temp;
+                    mCap = newCap;
                 }
             }
+            T& operator [] (int idx) {
+                return mArr[idx];
+            }
+            const T& operator [] (int idx) const {
+                return mArr[idx];
+            }
+            bool empty () const {
+                return size() == 0;
+            }
+            int size() const {
+                return mSize;
+            }
+            int capacity() const {
+                return mCap;
+            }
+            void pushBack(const T& x) {
+                if (mSize == mCap) {
+                    reserve(mCap*2);
+                }
+                mArr[mSize++] = x;
+            }
+            void pushBack(T&& x) {
+                if (mSize == mCap) {
+                    reserve(mCap*2);
+                }
+                mArr[mSize++] = std::move(x);
+            }
+            const T& back() const {
+                return mArr[mSize -1];
+            }
+            T& back() {
+                return const_cast<T&>( (static_cast<const vecArray&>(*this)).back());
+            }
+            void popBack() {
+                mSize--;
+            }
+            using iterator = T*;
+            using const_iterator = const T*;
+            iterator begin() {
+                return &(mArr[0]);
+            }
+            const_iterator begin() const {
+                return &(mArr[0]);
+            }
+            iterator end() {
+                return &(mArr[mSize]);
+            }
+            const_iterator end() const {
+                return &(mArr[mSize]);
+            }
+            void printVec() {
+                for (auto it=begin(); it!=end(); it++)
+                    std::cout << *it << " ";
+                std::cout << std::endl;
+            }
         private:
-            int capacity;
-            int sz;
-            T* arr;
+            int mCap;
+            int mSize;
+            T* mArr;
     };
 #endif

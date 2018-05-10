@@ -232,6 +232,7 @@
 #endif
 
 /*
+// Put following code in Tester to test it
 void main()
 {
     linkList<int> tester;
@@ -246,7 +247,6 @@ void main()
 
     tester.printList();
     tester2.printList();
-
     const linkList<int> tester3 = tester;
     tester3.printList();
 }
