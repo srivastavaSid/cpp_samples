@@ -107,8 +107,32 @@ void heapSort(T* arr, int sz) {
     }
 }
 
+template<typename T>
+void quickSortUtil(T *arr, int l, int r) {
+    int pivot(r), maxPos(r-1);
+    while(maxPos>=l && arr[maxPos] > arr[pivot])
+        maxPos--;
+    for (int i=maxPos-1; i>=l; i--) {
+        if (arr[i] > arr[pivot]) {
+            std::swap(arr[maxPos--], arr[i]);
+        }
+    }
+    std::swap(arr[pivot], arr[++maxPos]);
+    if (r > maxPos+1)
+        quickSortUtil(arr, maxPos+1, r);
+    if (maxPos-1 > l)
+        quickSortUtil(arr, l, maxPos-1);
+}
+
+template<typename T>
+void quickSort(T *arr, int sz) {
+    if (sz == 1)    
+        return;
+    quickSortUtil(arr, 0, sz-1);
+}
+
 void main() {
-    int arr[] = {3, 2, 7, 8, 1};
+    int arr[] = {3, 2, 7, 7, 7, 8, 4, 5};
     int sz = sizeof(arr)/sizeof(arr[0]);
     heapSort(arr, sz);
     printArr(arr, sz);

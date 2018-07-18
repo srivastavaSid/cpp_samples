@@ -17,10 +17,10 @@
             node(T&& tData, node* p = nullptr, node * n = nullptr)
                 : data(std::move(tData)), prev(p), next(n) {}
             
-            node& operator= (node && rhs) {
-                swap(prev, rhs.prev);
-                swap(next, rhs.next);
-                swap(data, rhs.data);
+            node& operator= (node&& rhs) {
+                std::swap(prev, rhs.prev);
+                std::swap(next, rhs.next);
+                std::swap(data, rhs.data);
                 return *this;
             }
         };
@@ -230,24 +230,3 @@
             }
     };
 #endif
-
-/*
-// Put following code in Tester to test it
-void main()
-{
-    linkList<int> tester;
-    tester.pushBack(1);
-    tester.pushBack(2);
-    tester.pushBack(3);
-    tester.pushFront(4);
-    tester.popBack();
-
-    linkList<int> tester2 = tester;
-    tester2.pushFront(3);
-
-    tester.printList();
-    tester2.printList();
-    const linkList<int> tester3 = tester;
-    tester3.printList();
-}
-*/

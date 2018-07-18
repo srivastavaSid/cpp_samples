@@ -87,8 +87,28 @@ int getLeftMostIndex (int *arr, int size, int key) {
     return arr[lIdx] == key ? lIdx : -1;
 }
 
+int getRotationIdx (int *arr, int size) {
+    int ret(-1);
+    if (size ==2 && arr[1] < arr[0])
+        ret = 1;
+
+    int l(0), r(size-1), m(0);
+    while(r-l > 1) {
+        m = l + (r-l)/2;
+        if (arr[m] < arr[m-1] && arr[m] < arr[m+1])
+            ret = m;
+        if (arr[l] < arr[m])
+            l = m;
+        else
+            r = m;
+    }
+    return ret;
+}
+
 void main() {
-    int testArr[] = {1, 2, 3, 4, 5, 5, 5, 5, 7};
-    int idx = getLeftMostIndex(testArr, sizeof(testArr)/sizeof(testArr[0]), 5);
+    // int testArr[] = {1, 2, 3, 4, 5, 5, 5, 5, 7};
+    // int idx = getLeftMostIndex(testArr, sizeof(testArr)/sizeof(testArr[0]), 5);
+    int testArr[] = {5, 1, 2, 3, 4, 5};
+    int idx = getRotationIdx(testArr, sizeof(testArr)/sizeof(testArr[0]));
     std::cout << "index = " << idx << std::endl;
 }
