@@ -2,7 +2,7 @@
 #include <vector>
 
 class Test {
-    public:
+public:
     Test()
     {
         std::cout << "Test Constructor" << std::endl;
@@ -26,7 +26,7 @@ class Test {
 
 class Tester {
     Test a;
-    public:
+public:
     Tester() {
         std::cout << "Tester Constructor" << std::endl;
     }
