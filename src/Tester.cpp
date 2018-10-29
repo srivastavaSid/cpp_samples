@@ -1,5 +1,6 @@
 #include <iostream>
 
+/*
 class Base {
 public:
     virtual void print(char a) {
@@ -19,6 +20,8 @@ int main() {
     d.print('a');
     return 0;
 }
+*/
+
 /*
 // create tree using inOrder and preOrder arr
 #include <queue>
@@ -158,10 +161,6 @@ int main() {
 /*
 #include "LinkList.h"
 
-void linkListToTree() {
-
-}
-
 void main() {
     linkList<int> tester;
     for (int i=1; i<16; i++)
@@ -194,46 +193,51 @@ void main() {
     aBst.insert(2);
     aBst.insert(5);
     aBst.insert(4);
-    std::cout << "Rank 4 element = " << aBst.getRank(6) << std::endl;
+    std::cout << "Rank 4 element = " << aBst.getRank(4) << std::endl;
 }
 */
 
-/*
-#include "BinaryTree.h"
 
-void main() {
-    binTree<int> bst;
-    for (int i=0; i<9; i++)
-        bst.insert(i);
-    bst.printTree();
-    bst.mirror();
-    bst.printTree();
-    std::cout << "Height of tree = " << bst.getHeight() << std::endl;
-    bst.printAncestor(7);
-    std::cout << "Dia of tree = " << bst.getDiameter() << std::endl;
-    bst.insert(4);
-    bst.insert(3);
-    bst.insert(5);
-    bst.insert(1);
-    bst.insert(2);
-    bst.printTree();
-    bst.inorderTraverse();
-    bst.inorderTraverseItr();
-    binTree<int> bst2 = bst;
-    bst2.insert(6);
-    bst2.printTree();
-    std::cout << "done" << std::endl;
-    bst = bst2;
-    bst.insert(4);
-    bst.printTree();
-    std::cout << "Height of tree = " << bst.getHeight() << std::endl;
-    std::cout << "Dia of tree = " << bst.getDiameter() << std::endl;
-    bst.remove(3);
-    bst.printTree();
-    bst.remove(4);
-    bst.printTree();
-}
-*/
+// #include "BinaryTree.h"
+
+// void main() {
+//     binTree<int> bst;
+//     for (int i=0; i<9; i++)
+//         bst.insert(i);
+//     bst.printTree();
+//     bst.diagonalTraverse();
+//     bst.mirror();
+//     bst.printTree();
+//     std::cout << "Height of tree = " << bst.getHeight() << std::endl;
+//     bst.printAncestor(7);
+//     std::cout << "Dia of tree = " << bst.getDiameter() << std::endl;
+//     bst.insert(4);
+//     bst.insert(3);
+//     bst.insert(5);
+//     bst.insert(1);
+//     bst.insert(2);
+//     bst.printTree();
+//     bst.inorderTraverse();
+//     bst.inorderTraverseItr();
+//     binTree<int> bst2 = bst;
+//     bst2.insert(6);
+//     bst2.printTree();
+//     bst2.preorderTraverse();
+//     bst2.preorderTraverseItr();
+//     bst2.postorderTraverse();
+//     bst2.postorderTraverseItr();
+//     std::cout << "done" << std::endl;
+//     bst = bst2;
+//     bst.insert(4);
+//     bst.printTree();
+//     std::cout << "Height of tree = " << bst.getHeight() << std::endl;
+//     std::cout << "Dia of tree = " << bst.getDiameter() << std::endl;
+//     bst.remove(3);
+//     bst.printTree();
+//     bst.remove(4);
+//     bst.printTree();
+// }
+
 
 /*
 #include "BinarySearchTree.h"
@@ -267,5 +271,66 @@ void main() {
     bst.remove(4);
     bst.printTree();
     return;
+}
+*/
+
+// #include <set>
+// #include <string>
+
+// struct Person {
+//     std::string name;
+// };
+
+// int main() {
+//     auto p1 = new Person {"A"};
+//     auto p2 = new Person {"B"};
+//     auto p3 = new Person {"C"};
+
+//     auto comparator = [](Person* p1, Person* p2) {
+//         return p1->name < p2->name;
+//     };
+
+//     std::set<Person*, decltype(comparator)> people({p1, p2, p3}, comparator);
+
+//     for (auto person : people) {
+//         std::cout << person->name << std::endl;
+//     }
+
+//     return 0;
+// }
+
+
+#include <type_traits>
+
+template <class T, typename R = typename std::enable_if_t<std::is_arithmetic_v<T>>>
+T sum(T a, T b) {
+    return a + b;
+}
+
+int main() {
+     
+
+    std::cout << sum<int>(1, 2) << std::endl;
+    std::cout << sum<double>(1.5, 1.6) << std::endl;
+
+    std::cout << sum<std::string>("Hello", "World") << std::endl;
+
+    return 0;
+}
+
+
+/*
+#include <array>
+
+template <typename T, std::size_t N>
+constexpr std::size_t arrSz(T (&) [N]) noexcept {
+    return N;
+}
+
+int main() {
+    int arr[] = {1, 2, 3, 4, 5};
+    std::cout << arrSz(arr) << std::endl;
+    int newArr[arrSz(arr)] = {1};
+    std::cout << arrSz(newArr) << std::endl;
 }
 */

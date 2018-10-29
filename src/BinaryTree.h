@@ -85,21 +85,93 @@ public:
         tempStk.push(root);
         while(! tempStk.empty()) {
             temp = tempStk.top();
-            if (temp->left != nullptr)
+            if (temp->left != nullptr) {
                 tempStk.push(temp->left);
-            else {
+                continue;
+            }
+            std::cout << temp->data << " ";
+            tempStk.pop();
+            while (temp->right == nullptr && !tempStk.empty()) {
+                temp = tempStk.top();
                 std::cout << temp->data << " ";
                 tempStk.pop();
-                while (temp->right == nullptr && !tempStk.empty()) {
-                    temp = tempStk.top();
-                    std::cout << temp->data << " ";
-                    tempStk.pop();
-                }
-                if (temp->right != nullptr)
-                    tempStk.push(temp->right);
+            }
+            if (temp->right != nullptr)
+                tempStk.push(temp->right);
+        }
+        std::cout << std::endl;
+    }
+    void preorderTraverse() {
+        preorderTraverseUtil(root);
+        std::cout << std::endl;
+    }
+    void preorderTraverseItr() {
+        if (root == nullptr)
+            return;
+        treeNode* temp = nullptr;
+        std::stack<treeNode*> tempStk;
+        tempStk.push(root);
+        while (!tempStk.empty()) {
+            // process root
+            temp = tempStk.top();
+            tempStk.pop();
+            std::cout << temp->data << " ";
+            // push right first so that it will be processed later
+            if (temp->right != nullptr)
+                tempStk.push(temp->right);
+            if (temp->left != nullptr)
+                tempStk.push(temp->left);
+        }
+        std::cout << std::endl;
+    }
+    void postorderTraverse() {
+        postorderTraverseUtil(root);
+        std::cout << std::endl;
+    }
+    void postorderTraverseItr() {
+        if (root == nullptr)
+            return;
+        std::stack<treeNode*> tempStk;
+        std::stack<treeNode*> nodeStk;
+        tempStk.push(root);
+        treeNode* temp(nullptr);
+        while (! tempStk.empty()) {
+            temp = tempStk.top();
+            tempStk.pop();
+            nodeStk.push(temp);
+            // push left child first so that it will be processed later
+            //      and thus put on top in second stack
+            if (temp->left != nullptr)
+                tempStk.push(temp->left);
+            if (temp->right != nullptr)
+                tempStk.push(temp->right);
+        }
+        while (! nodeStk.empty()) {
+            std::cout << nodeStk.top()->data << " ";
+            nodeStk.pop();
+        }
+        std::cout << std::endl;
+    }
+    void diagonalTraverse() {
+        if (root == nullptr)
+            return;
+        std::queue<treeNode*> tempQ;
+        tempQ.push(root);
+        treeNode* temp(nullptr);
+        while (! tempQ.empty()) {
+            temp = tempQ.front();
+            tempQ.pop();
+            while (temp != nullptr) {
+                std::cout << temp->data << " ";
+                if (temp->left != nullptr)
+                    tempQ.push(temp->left);
+                temp = temp->right;
             }
         }
         std::cout << std::endl;
+    }
+    void density() {
+        
     }
     void printAncestor (const T& x) {
         printAncestorUtil(root, x);
@@ -134,8 +206,10 @@ public:
         // itr pointing to a leaf and tempQ is empty
         if (keyNode != nullptr) {
             keyNode->data = itr->data;
-            if (root == itr)
+            if (root == itr) {
+                delete itr;
                 root = nullptr;
+            }
             else {
                 tempQ.push(root);
                 treeNode* temp(nullptr);
@@ -225,6 +299,20 @@ private:
         inorderTraverseUtil(pTrNd->left);
         std::cout << pTrNd->data << " ";
         inorderTraverseUtil(pTrNd->right);
+    }
+    void preorderTraverseUtil(treeNode* pTrNd) {
+        if (pTrNd == nullptr)
+            return;
+        std::cout << pTrNd->data << " ";
+        preorderTraverseUtil(pTrNd->left);
+        preorderTraverseUtil(pTrNd->right);
+    }
+    void postorderTraverseUtil(treeNode* pTrNd) {
+        if (pTrNd == nullptr)
+            return;
+        postorderTraverseUtil(pTrNd->left);
+        postorderTraverseUtil(pTrNd->right);
+        std::cout << pTrNd->data << " ";
     }
     bool printAncestorUtil(treeNode* pTrNd, const T& x) {
         if (pTrNd == nullptr)
